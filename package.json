@@ -1,0 +1,52 @@
+{
+  "name": "react-ukraine-map",
+  "version": "1.0.0",
+  "description": "The map of Ukraine as a react component",
+  "main": "dist/index.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --mode production",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "test": "jest",
+    "lint": "node_modules/eslint/bin/eslint.js --ext .js --ext .jsx src/**",
+    "lint:fix": "node_modules/eslint/bin/eslint.js --ext .js --ext .jsx src/** --fix"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.2",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@storybook/addon-actions": "^6.4.18",
+    "@storybook/addon-essentials": "^6.4.18",
+    "@storybook/addon-links": "^6.4.18",
+    "@storybook/builder-webpack5": "^6.4.18",
+    "@storybook/manager-webpack5": "^6.4.18",
+    "@storybook/react": "^6.4.18",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.5",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-storybook": "^0.5.6",
+    "jest": "^27.5.1",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "17.x",
+    "prop-types": "15.x"
+  },
+  "dependencies": {}
+}
