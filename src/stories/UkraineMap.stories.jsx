@@ -11,7 +11,16 @@ export default {
 };
 
 export function Simple() {
+  const data = [
+    {
+      key: 'TP',
+      backgroundColor: 'red',
+      borderColor: 'yellow',
+      borderWidth: 1,
+    },
+  ];
+
   return (
-    <UkraineMap />
+    <UkraineMap width={1000} data={data} />
   );
 }

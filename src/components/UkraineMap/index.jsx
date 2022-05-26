@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 
 import regions from './regions';
 
-function UkraineMap({ width }) {
+function UkraineMap({
+  width, data, backgroundColor: defaultBg, borderColor: defaultBc, borderWidth: defaultBw,
+}) {
   const mapRatio = 1.5;
   const height = width / mapRatio;
 
@@ -17,13 +19,28 @@ function UkraineMap({ width }) {
         height="408.0199"
         viewBox="0 0 612.47321 408.0199"
       >
-        {Object.entries(regions).map(([key, { name, d }]) => (
-          <path
-            d={d}
-            title={name}
-            id={key}
-          />
-        ))}
+        {Object.entries(regions).map(([id, { name, d }]) => {
+          const {
+            backgroundColor,
+            borderColor,
+            borderWidth,
+          } = data.find(({ key }) => key === id) || {};
+
+          const pathAttrs = {
+            fill: backgroundColor || defaultBg,
+            stroke: borderColor || defaultBc,
+            strokeWidth: borderWidth || defaultBw,
+          };
+
+          return (
+            <path
+              d={d}
+              title={name}
+              id={id}
+              {...pathAttrs}
+            />
+          );
+        })}
       </svg>
     </div>
   );
@@ -31,10 +48,28 @@ function UkraineMap({ width }) {
 
 UkraineMap.propTypes = {
   width: PropTypes.number,
+  backgroundColor: PropTypes.string,
+  borderColor: PropTypes.string,
+  borderWidth: PropTypes.string,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.oneOf(Object.entries(regions).map(([key]) => key)),
+      backgroundColor: PropTypes.string,
+      borderColor: PropTypes.string,
+      borderWidth: PropTypes.number,
+      data: PropTypes.shape({
+        value: PropTypes.string,
+      }),
+    }),
+  ),
 };
 
 UkraineMap.defaultProps = {
-  width: 600,
+  width: 700,
+  data: [],
+  backgroundColor: '#2596be',
+  borderColor: 'white',
+  borderWidth: 0.5,
 };
 
 export default UkraineMap;
