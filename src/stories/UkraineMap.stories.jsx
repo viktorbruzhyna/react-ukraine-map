@@ -24,3 +24,18 @@ export function Simple() {
     <UkraineMap width={1000} data={data} />
   );
 }
+
+export function FullWidth() {
+  const data = [
+    {
+      key: 'TP',
+      backgroundColor: 'red',
+      borderColor: 'yellow',
+      borderWidth: 1,
+    },
+  ];
+
+  return (
+    <UkraineMap fullWidth data={data} />
+  );
+}
