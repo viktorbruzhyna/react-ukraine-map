@@ -17,6 +17,7 @@ export function Simple() {
       backgroundColor: 'red',
       borderColor: 'yellow',
       borderWidth: 1,
+      fontColor: 'yellow',
     },
   ];
 
@@ -26,16 +27,16 @@ export function Simple() {
 }
 
 export function FullWidth() {
-  const data = [
-    {
-      key: 'TP',
-      backgroundColor: 'red',
-      borderColor: 'yellow',
-      borderWidth: 1,
-    },
-  ];
+  // const data = [
+  //   {
+  //     key: 'TP',
+  //     backgroundColor: 'red',
+  //     borderColor: 'yellow',
+  //     borderWidth: 1,
+  //   },
+  // ];
 
   return (
-    <UkraineMap fullWidth data={data} />
+    <UkraineMap fullWidth />
   );
 }

@@ -11,6 +11,7 @@ function UkraineMap({
   backgroundColor: defaultBg,
   borderColor: defaultBc,
   borderWidth: defaultBw,
+  fontColor: defaultFc,
 }) {
   const wrapper = useRef(null);
   const [mapWidth, setMapWidth] = useState(width);
@@ -33,6 +34,8 @@ function UkraineMap({
   const mapRatio = 1.5;
   const height = mapWidth / mapRatio;
 
+  const regionList = Object.entries(regions);
+
   return (
     <div ref={wrapper}>
       <svg
@@ -42,7 +45,7 @@ function UkraineMap({
         height="408.0199"
         viewBox="0 0 612.47321 408.0199"
       >
-        {Object.entries(regions).map(([id, { name, d }]) => {
+        {regionList.map(([id, { name, d }]) => {
           const {
             backgroundColor,
             borderColor,
@@ -64,6 +67,23 @@ function UkraineMap({
             />
           );
         })}
+        {regionList.map(([id, { name, t }]) => {
+          const { fontColor } = data.find(({ key }) => key === id) || {};
+
+          const fill = fontColor || defaultFc;
+
+          const textProps = {
+            ...t,
+            textAnchor: 'middle',
+            style: { font: 'bold 6px sans-serif', fill },
+          };
+
+          return (
+            t && (
+              <text {...textProps}>{name}</text>
+            )
+          );
+        })}
       </svg>
     </div>
   );
@@ -74,6 +94,7 @@ UkraineMap.propTypes = {
   fullWidth: PropTypes.bool,
   backgroundColor: PropTypes.string,
   borderColor: PropTypes.string,
+  fontColor: PropTypes.string,
   borderWidth: PropTypes.string,
   data: PropTypes.arrayOf(
     PropTypes.shape({
@@ -81,6 +102,7 @@ UkraineMap.propTypes = {
       backgroundColor: PropTypes.string,
       borderColor: PropTypes.string,
       borderWidth: PropTypes.number,
+      fontColor: PropTypes.string,
       data: PropTypes.shape({
         value: PropTypes.string,
       }),
@@ -94,6 +116,7 @@ UkraineMap.defaultProps = {
   data: [],
   backgroundColor: '#2596be',
   borderColor: 'white',
+  fontColor: 'black',
   borderWidth: 0.5,
 };
 
