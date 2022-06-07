@@ -11,6 +11,24 @@ export default {
 };
 
 export function Simple() {
+  return (
+    <UkraineMap width={700} />
+  );
+}
+
+export function FullWidth() {
+  return (
+    <UkraineMap fullWidth />
+  );
+}
+
+export function UkrainianLanguage() {
+  return (
+    <UkraineMap fullWidth lang="uk" />
+  );
+}
+
+export function CustomColors() {
   const data = [
     {
       key: 'TP',
@@ -22,21 +40,19 @@ export function Simple() {
   ];
 
   return (
-    <UkraineMap width={1000} data={data} />
+    <UkraineMap data={data} fullWidth lang="uk" />
   );
 }
 
-export function FullWidth() {
-  // const data = [
-  //   {
-  //     key: 'TP',
-  //     backgroundColor: 'red',
-  //     borderColor: 'yellow',
-  //     borderWidth: 1,
-  //   },
-  // ];
+export function CustomLabel() {
+  const data = [
+    {
+      key: 'TP',
+      label: 'Файна область',
+    },
+  ];
 
   return (
-    <UkraineMap fullWidth />
+    <UkraineMap data={data} fullWidth lang="uk" />
   );
 }

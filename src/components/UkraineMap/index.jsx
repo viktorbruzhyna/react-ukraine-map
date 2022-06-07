@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import regions from './regions';
+import regionsUk from '../../locales/uk/regions.json';
 
 function UkraineMap({
+  lang,
   width,
   fullWidth,
   data,
@@ -30,6 +31,8 @@ function UkraineMap({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const isUk = lang === 'uk';
 
   const mapRatio = 1.5;
   const height = mapWidth / mapRatio;
@@ -68,9 +71,11 @@ function UkraineMap({
           );
         })}
         {regionList.map(([id, { name, t }]) => {
-          const { fontColor } = data.find(({ key }) => key === id) || {};
+          const { fontColor, label } = data.find(({ key }) => key === id) || {};
 
+          const regionName = isUk ? regionsUk[name] : name;
           const fill = fontColor || defaultFc;
+          const displayLabel = label || regionName;
 
           const textProps = {
             ...t,
@@ -80,7 +85,7 @@ function UkraineMap({
 
           return (
             t && (
-              <text {...textProps}>{name}</text>
+              <text {...textProps}>{displayLabel}</text>
             )
           );
         })}
@@ -90,6 +95,7 @@ function UkraineMap({
 }
 
 UkraineMap.propTypes = {
+  lang: PropTypes.oneOf(['uk', 'en']),
   width: PropTypes.number,
   fullWidth: PropTypes.bool,
   backgroundColor: PropTypes.string,
@@ -98,14 +104,13 @@ UkraineMap.propTypes = {
   borderWidth: PropTypes.string,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.oneOf(Object.entries(regions).map(([key]) => key)),
+      key: PropTypes.oneOf(Object.entries(regions).map(([key]) => key)).isRequired,
       backgroundColor: PropTypes.string,
       borderColor: PropTypes.string,
       borderWidth: PropTypes.number,
       fontColor: PropTypes.string,
-      data: PropTypes.shape({
-        value: PropTypes.string,
-      }),
+      label: PropTypes.string,
+      value: PropTypes.string,
     }),
   ),
 };
@@ -118,6 +123,7 @@ UkraineMap.defaultProps = {
   borderColor: 'white',
   fontColor: 'black',
   borderWidth: 0.5,
+  lang: 'en',
 };
 
 export default UkraineMap;
