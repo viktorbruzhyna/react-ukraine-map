@@ -1,18 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import regions from './regions';
-import regionsUk from '../../locales/uk/regions.json';
+import regions from '../../data/regions';
+import Region from './Region';
 
 function UkraineMap({
   lang,
   width,
   fullWidth,
   data,
-  backgroundColor: defaultBg,
-  borderColor: defaultBc,
-  borderWidth: defaultBw,
-  fontColor: defaultFc,
+  style,
 }) {
   const wrapper = useRef(null);
   const [mapWidth, setMapWidth] = useState(width);
@@ -48,45 +45,18 @@ function UkraineMap({
         height="408.0199"
         viewBox="0 0 612.47321 408.0199"
       >
-        {regionList.map(([id, { name, d }]) => {
-          const {
-            backgroundColor,
-            borderColor,
-            borderWidth,
-          } = data.find(({ key }) => key === id) || {};
-
-          const pathAttrs = {
-            fill: backgroundColor || defaultBg,
-            stroke: borderColor || defaultBc,
-            strokeWidth: borderWidth || defaultBw,
-          };
+        {regionList.map(([id, { name, d, t }]) => {
+          const foundData = data.find(({ key }) => key === id) || {};
 
           return (
-            <path
-              d={d}
-              title={name}
-              id={id}
-              {...pathAttrs}
+            <Region
+              data={foundData}
+              region={{
+                d, id, name, t,
+              }}
+              style={style}
+              isUk={isUk}
             />
-          );
-        })}
-        {regionList.map(([id, { name, t }]) => {
-          const { fontColor, label } = data.find(({ key }) => key === id) || {};
-
-          const regionName = isUk ? regionsUk[name] : name;
-          const fill = fontColor || defaultFc;
-          const displayLabel = label || regionName;
-
-          const textProps = {
-            ...t,
-            textAnchor: 'middle',
-            style: { font: 'bold 6px sans-serif', fill },
-          };
-
-          return (
-            t && (
-              <text {...textProps}>{displayLabel}</text>
-            )
           );
         })}
       </svg>
@@ -98,10 +68,13 @@ UkraineMap.propTypes = {
   lang: PropTypes.oneOf(['uk', 'en']),
   width: PropTypes.number,
   fullWidth: PropTypes.bool,
-  backgroundColor: PropTypes.string,
-  borderColor: PropTypes.string,
-  fontColor: PropTypes.string,
-  borderWidth: PropTypes.string,
+  style: PropTypes.shape({
+    backgroundColor: PropTypes.string,
+    borderColor: PropTypes.string,
+    fontColor: PropTypes.string,
+    borderWidth: PropTypes.string,
+    fontSize: PropTypes.string,
+  }),
   data: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.oneOf(Object.entries(regions).map(([key]) => key)).isRequired,
@@ -119,10 +92,13 @@ UkraineMap.defaultProps = {
   width: 700,
   fullWidth: false,
   data: [],
-  backgroundColor: '#2596be',
-  borderColor: 'white',
-  fontColor: 'black',
-  borderWidth: 0.5,
+  style: {
+    backgroundColor: '#2596be',
+    borderColor: 'white',
+    fontColor: 'black',
+    borderWidth: 0.5,
+    fontSize: 6,
+  },
   lang: 'en',
 };
 

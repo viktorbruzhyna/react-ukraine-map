@@ -56,3 +56,22 @@ export function CustomLabel() {
     <UkraineMap data={data} fullWidth lang="uk" />
   );
 }
+
+export function ShowValueLabel() {
+  const data = [
+    {
+      key: 'TP',
+      label: '1,253,213',
+      fontColor: 'white',
+    },
+    {
+      key: 'PL',
+      label: '0.9999%',
+      fontColor: 'white',
+    },
+  ];
+
+  return (
+    <UkraineMap data={data} fullWidth lang="uk" />
+  );
+}
