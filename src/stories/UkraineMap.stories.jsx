@@ -2,6 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import UkraineMap from '../components/UkraineMap';
+import Tooltip from './Tooltip';
 
 import './custom-styles.css';
 
@@ -61,17 +62,51 @@ export function ShowValueLabel() {
   const data = [
     {
       key: 'TP',
-      label: '1,253,213',
+      value: '1,253,213',
       fontColor: 'white',
     },
     {
       key: 'PL',
-      label: '0.9999%',
+      value: '0.9999%',
       fontColor: 'white',
     },
   ];
 
   return (
     <UkraineMap data={data} fullWidth lang="uk" />
+  );
+}
+
+export function ShowTooltip() {
+  const data = [
+    {
+      key: 'TP',
+      value: '1,253,213',
+      fontColor: 'white',
+    },
+    {
+      key: 'PL',
+      value: '0.9999%',
+      fontColor: 'white',
+    },
+  ];
+
+  return (
+    <UkraineMap data={data} fullWidth lang="uk" showHoverTooltip showInlineLabels={false} />
+  );
+}
+
+export function CustomTooltip() {
+  const data = [
+    {
+      key: 'TP',
+      label: 'Населення',
+      value: '1,253,213',
+      fontColor: 'white',
+    },
+  ];
+
+  return (
+    <UkraineMap data={data} fullWidth lang="uk" showHoverTooltip showInlineLabels={false} tooltipComponent={Tooltip} />
   );
 }

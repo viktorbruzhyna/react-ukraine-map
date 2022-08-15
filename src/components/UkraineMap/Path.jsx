@@ -3,17 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Path({
-  region: {
-    d,
-    name,
-    id,
-  },
+  region,
   style: {
     backgroundColor: defaultBackgroundColor,
     borderColor: defaultBorderColor,
     borderWidth: defaultBorderWidth,
   },
   data,
+  setTooltipData,
 }) {
   const {
     backgroundColor,
@@ -21,15 +18,34 @@ function Path({
     borderWidth,
   } = data;
 
+  const {
+    d,
+    name,
+    id,
+  } = region;
+
   const pathAttrs = {
     fill: backgroundColor || defaultBackgroundColor,
     stroke: borderColor || defaultBorderColor,
     strokeWidth: borderWidth || defaultBorderWidth,
   };
 
+  const handleMouseMove = (event) => {
+    setTooltipData({
+      data,
+      region,
+      coords: {
+        x: event.clientX,
+        y: event.clientY,
+      },
+    });
+  };
+
   return (
     <path
       d={d}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => { setTooltipData(); }}
       title={name}
       id={id}
       {...pathAttrs}
@@ -55,6 +71,7 @@ Path.propTypes = {
     borderColor: PropTypes.string,
     borderWidth: PropTypes.string,
   }),
+  setTooltipData: PropTypes.func.isRequired,
 };
 
 Path.defaultProps = {

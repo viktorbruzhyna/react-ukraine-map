@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import regions from '../../data/regions';
 import Region from './Region';
+import Tooltip from './Tooltip';
 
 function UkraineMap({
   lang,
@@ -10,9 +11,13 @@ function UkraineMap({
   fullWidth,
   data,
   style,
+  showInlineLabels,
+  showHoverTooltip,
+  tooltipComponent,
 }) {
   const wrapper = useRef(null);
   const [mapWidth, setMapWidth] = useState(width);
+  const [tooltipData, setTooltipData] = useState();
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,30 +42,37 @@ function UkraineMap({
   const regionList = Object.entries(regions);
 
   return (
-    <div ref={wrapper}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ width: mapWidth, height }}
-        width="612.47321"
-        height="408.0199"
-        viewBox="0 0 612.47321 408.0199"
-      >
-        {regionList.map(([id, { name, d, t }]) => {
-          const foundData = data.find(({ key }) => key === id) || {};
+    <>
+      <div ref={wrapper}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ width: mapWidth, height }}
+          width="612.47321"
+          height="408.0199"
+          viewBox="0 0 612.47321 408.0199"
+        >
+          {regionList.map(([id, { name, d, t }]) => {
+            const foundData = data.find(({ key }) => key === id) || {};
 
-          return (
-            <Region
-              data={foundData}
-              region={{
-                d, id, name, t,
-              }}
-              style={style}
-              isUk={isUk}
-            />
-          );
-        })}
-      </svg>
-    </div>
+            return (
+              <Region
+                data={foundData}
+                region={{
+                  d, id, name, t,
+                }}
+                style={style}
+                isUk={isUk}
+                setTooltipData={setTooltipData}
+                showInlineLabels={showInlineLabels}
+              />
+            );
+          })}
+        </svg>
+      </div>
+      {tooltipData && showHoverTooltip && (
+        <Tooltip {...tooltipData} isUk={isUk} component={tooltipComponent} />
+      )}
+    </>
   );
 }
 
@@ -86,6 +98,9 @@ UkraineMap.propTypes = {
       value: PropTypes.string,
     }),
   ),
+  showInlineLabels: PropTypes.bool,
+  showHoverTooltip: PropTypes.bool,
+  tooltipComponent: PropTypes.node,
 };
 
 UkraineMap.defaultProps = {
@@ -100,6 +115,9 @@ UkraineMap.defaultProps = {
     fontSize: 6,
   },
   lang: 'en',
+  showInlineLabels: true,
+  showHoverTooltip: false,
+  tooltipComponent: undefined,
 };
 
 export default UkraineMap;

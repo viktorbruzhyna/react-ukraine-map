@@ -1,34 +1,32 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Path from './Path';
 import Text from './Text';
-import Tooltip from './Tooltip';
 
 function Region({
   region,
   style,
   data,
   isUk,
+  setTooltipData,
+  showInlineLabels,
 }) {
-  const [showTooltip, setShowTooltip] = useState(false);
-
   return (
     <>
       <Path
         region={region}
         data={data}
         style={style}
-        onHover={setShowTooltip}
+        setTooltipData={setTooltipData}
       />
-      <Text
-        region={region}
-        data={data}
-        style={style}
-        isUk={isUk}
-      />
-      {showTooltip && (
-        <Tooltip data={data} />
+      {showInlineLabels && (
+        <Text
+          region={region}
+          data={data}
+          style={style}
+          isUk={isUk}
+        />
       )}
     </>
   );
@@ -59,6 +57,8 @@ Region.propTypes = {
     fontColor: PropTypes.string,
     label: PropTypes.string,
   }),
+  setTooltipData: PropTypes.func.isRequired,
+  showInlineLabels: PropTypes.bool.isRequired,
 };
 
 Region.defaultProps = {
