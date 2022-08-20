@@ -62,9 +62,7 @@ Path.propTypes = {
   style: PropTypes.shape({
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
-    fontColor: PropTypes.string,
     borderWidth: PropTypes.string,
-    fontSize: PropTypes.string,
   }).isRequired,
   data: PropTypes.shape({
     backgroundColor: PropTypes.string,

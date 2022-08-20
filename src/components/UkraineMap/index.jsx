@@ -84,8 +84,8 @@ UkraineMap.propTypes = {
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
     fontColor: PropTypes.string,
-    borderWidth: PropTypes.string,
-    fontSize: PropTypes.string,
+    borderWidth: PropTypes.number,
+    fontSize: PropTypes.number,
   }),
   data: PropTypes.arrayOf(
     PropTypes.shape({
@@ -95,7 +95,7 @@ UkraineMap.propTypes = {
       borderWidth: PropTypes.number,
       fontColor: PropTypes.string,
       label: PropTypes.string,
-      value: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }),
   ),
   showInlineLabels: PropTypes.bool,
@@ -110,8 +110,8 @@ UkraineMap.defaultProps = {
   style: {
     backgroundColor: '#2596be',
     borderColor: 'white',
-    fontColor: 'black',
     borderWidth: 0.5,
+    fontColor: 'white',
     fontSize: 6,
   },
   lang: 'en',

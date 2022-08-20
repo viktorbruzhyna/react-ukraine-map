@@ -30,6 +30,19 @@ export function UkrainianLanguage() {
 }
 
 export function CustomColors() {
+  const style = {
+    backgroundColor: 'blue',
+    borderColor: 'yellow',
+    borderWidth: 0.5,
+    fontSize: 6,
+  };
+
+  return (
+    <UkraineMap style={style} showInlineLabels={false} fullWidth lang="uk" />
+  );
+}
+
+export function CustomRegionColors() {
   const data = [
     {
       key: 'TP',
@@ -45,7 +58,7 @@ export function CustomColors() {
   );
 }
 
-export function CustomLabel() {
+export function CustomRegionLabel() {
   const data = [
     {
       key: 'TP',
